@@ -189,7 +189,7 @@ void wczytanie_pytan(kwota_gry* head)
 void wyswietlenie_pytania(pytanie* head)
 {
     if (head == NULL) return;
-    system("cls");
+   // system("cls");
     printf("%s\n", head->tresc_pytania);
     printf("%s\n", head->odpa);
     printf("%s\n", head->odpb);
@@ -462,21 +462,24 @@ void wyswietlenie_wszystkich_pytan(kwota_gry* head)
         while (pomocnicza)
 
         {
-            //pytanie* aktualne_pytanie = pomocnicza->wskaznik_na_pytanie;
-           // if (aktualne_pytanie)
+          //  pytanie* aktualne_pytanie = pomocnicza->wskaznik_na_pytanie;
+          //  if (aktualne_pytanie)
            // {
-            printf(" Pytania za %d", pomocnicza->kwota);
-            printf("  %d\n", pomocnicza->ilosc_pytan);
-            /* while (aktualne_pytanie)
-             {
-                 wyswietlenie_pytania(aktualne_pytanie);
-                 aktualne_pytanie = aktualne_pytanie->nastepne;
-             }
-             free(aktualne_pytanie);
-            */ pomocnicza = pomocnicza->next;
-        }
+                printf(" Pytania za %d", pomocnicza->kwota);
+                printf("  %d\n", pomocnicza->ilosc_pytan);
+              /*  while (aktualne_pytanie)
+                {
+                    wyswietlenie_pytania(aktualne_pytanie);
+                    aktualne_pytanie = aktualne_pytanie->nastepne;
+                }
+                free(aktualne_pytanie);
+               */ pomocnicza = pomocnicza->next;
+            }
+       // }
+        usuwanie_listy_pytan(head);
+        usuwanie_listy_pierwotnej(head);
         return;
-        //}
+        
     }
 
     else printf("Brak pytan\n");
