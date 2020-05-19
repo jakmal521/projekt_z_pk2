@@ -29,7 +29,7 @@ void gra(kwota_gry* head)
         else printf("Grasz o %d", head->kwota);
         printf("zl. Oto pytanie:\n");
         getchar();
-        wyswietlenie_pytania(aktualne_pytanie);
+        wyswietlenie_pytania(aktualne_pytanie, 0);
         printf("Poprawna odpowiedz to: ");
         odp = getchar();
         odp = toupper(odp);
@@ -74,7 +74,7 @@ void gra(kwota_gry* head)
 
         if (odp == aktualne_pytanie->poprawna)
         {
-            printf("Dobra odpowiedz! Przechodzimy do kolejnego pytania. Twoja aktualna wygrana to %d\n", head->kwota);
+            printf("Dobra odpowiedz! Przechodzimy do kolejnego pytania. Twoja aktualna wygrana to %d zl!\n", head->kwota);
             nagroda = head->kwota;
         }
         else
@@ -97,7 +97,7 @@ void gra(kwota_gry* head)
 
         getchar(); getchar();
 
-        //system("cls");
+       
         head = head->next;
     }
     printf("Gratulacje wygrales okragly million zl!\n");
@@ -112,22 +112,20 @@ void opcje_dodatkowe(kwota_gry* head)
     char wybor;
     while (1)
     {
-        printf("1.Dodanie pytania\n");
-        printf("2.Wyswietlenie wszystkich pytan\n");
-        printf("3.Powrot\n");
+        printf("1.Wyswietlenie wszystkich pytan\n");
+        printf("2.Powrot\n");
         getchar();
         wybor = getchar();
 
         switch (wybor)
         {
-            //case '1': dodanie_pytania(); break;
+           
 
-        case '2': wyswietlenie_wszystkich_pytan(head); break;
+        case '1': wyswietlenie_wszystkich_pytan(head); break;
 
-        case '3': return; break;
+        case '2': return; break;
 
-
-
+        default: break;
 
         }
 
@@ -167,29 +165,32 @@ void wczytanie_pytan(kwota_gry* head)
 
             kwota_pytania_2 = atoi(kwota_pytania);
             kwota_gry* szukana_wartosc = szukanie_kwoty(head, kwota_pytania_2);
-
-            szukana_wartosc->ilosc_pytan++;
-            char pomocnicza[3];
-            pytanie* nowy = malloc(sizeof(pytanie));
-            fgets(nowy->tresc_pytania, 300, plik);
-            fgets(nowy->odpa, 30, plik);
-            fgets(nowy->odpb, 30, plik);
-            fgets(nowy->odpc, 30, plik);
-            fgets(nowy->odpd, 30, plik);
-            fgets(pomocnicza, 3, plik);
-            nowy->poprawna = pomocnicza[0];
-            nowy->nastepne = szukana_wartosc->wskaznik_na_pytanie;
-            szukana_wartosc->wskaznik_na_pytanie = nowy;
+            if (szukana_wartosc != NULL)
+            {
+                szukana_wartosc->ilosc_pytan++;
+                char pomocnicza[3];
+                pytanie* nowy = malloc(sizeof(pytanie));
+                fgets(nowy->tresc_pytania, 300, plik);
+                fgets(nowy->odpa, 30, plik);
+                fgets(nowy->odpb, 30, plik);
+                fgets(nowy->odpc, 30, plik);
+                fgets(nowy->odpd, 30, plik);
+                fgets(pomocnicza, 3, plik);
+                nowy->poprawna = pomocnicza[0];
+                nowy->nastepne = szukana_wartosc->wskaznik_na_pytanie;
+                szukana_wartosc->wskaznik_na_pytanie = nowy;
+            }
         }
 
         fclose(plik);
     }
 }
 
-void wyswietlenie_pytania(pytanie* head)
+void wyswietlenie_pytania(pytanie* head ,int czy_wszystkie_pytania)
 {
     if (head == NULL) return;
-   // system("cls");
+    if (czy_wszystkie_pytania != 1)
+    system("cls");
     printf("%s\n", head->tresc_pytania);
     printf("%s\n", head->odpa);
     printf("%s\n", head->odpb);
@@ -233,16 +234,16 @@ void pol_na_pol(pytanie* head, int flaga_aktualne_kolo, int* uzycie_pol_na_pol_w
 
         }
         *uzycie_pol_na_pol_w_pytaniu = 1;
-        wyswietlenie_pytania(head); return;
+        wyswietlenie_pytania(head,0); return;
     }
-    else  wyswietlenie_pytania(head);  printf("Kolo ratunkowe 50/50 zostalo juz wykorzystane! Jezeli nie wiesz sprobuj odgadnac prawidlowa odpowiedz\n");
+    else  wyswietlenie_pytania(head,0);  printf("Kolo ratunkowe 50/50 zostalo juz wykorzystane! Jezeli nie wiesz sprobuj odgadnac prawidlowa odpowiedz\n");
 
     return;
 
 }
 void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo)
 {
-    wyswietlenie_pytania(head);
+    wyswietlenie_pytania(head,0);
     if (flaga_aktualne_kolo == 0)
     {
 
@@ -282,7 +283,7 @@ void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo)
 }
 void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, int flaga_aktualne_kolo, pytanie* head)
 {
-    wyswietlenie_pytania(head);
+    wyswietlenie_pytania(head,0);
     if (flaga_aktualne_kolo == 0)
     {
         srand((unsigned int)time(NULL));
@@ -370,60 +371,7 @@ pytanie* losowanie_pytania(kwota_gry* head)
 
 
 }
-/*void dodanie_pytania()
-{   system("cls");
 
-
-
-    FILE * plik = fopen("pytania_do_milionerow.txt", "a");
-    if (plik)
-
-    {
-        int kwota;
-        char odpa_1[33] = "A."; char odpa_2[30];
-        char odpb_1[33] = "B."; char odpb_2[30];
-        char odpc_1[33] = "C."; char odpc_2[30];
-        char odpd_1[33] = "D."; char odpd_2[30];
-        char pytanie_do_pliku[300];
-        char poprawna;
-        printf("Pytanie o jakiej wartosci chcesz dodac?\n");
-        scanf("%d", &kwota);
-        fprintf(plik, "\n%d\n", kwota);
-
-        printf("Pytanie:\n");
-        gets(pytanie_do_pliku);
-        fprintf(plik, "%s\n", pytanie_do_pliku);
-
-        printf("Odpowiedz A:\n");
-        scanf("%s\n", odpa_2);
-        strcpy(odpa_1, odpa_2);
-        fprintf(plik, "%s", odpa_1);
-
-        printf("Odpowiedz B:\n");
-        scanf("%s\n", odpb_2);
-        strcpy(odpb_1, odpb_2);
-        fprintf(plik, "%s", odpb_1);
-
-        printf("Odpowiedz C:\n");
-        scanf("%s\n", odpc_2);
-        strcpy(odpc_1, odpc_2);
-        fprintf(plik, "%s", odpa_1);
-
-        printf("Odpowiedz D:\n");
-        scanf("%s\n", odpd_2);
-        strcpy(odpd_1, odpd_2);
-        fprintf(plik, "%s", odpd_1);
-
-
-
-
-fclose(plik);
-    }
-
-
-    return;
-
-} */
 kwota_gry* utworzenie_listy(kwota_gry* head, int wartosc_pytania)
 {
     if (head == NULL)
@@ -462,20 +410,20 @@ void wyswietlenie_wszystkich_pytan(kwota_gry* head)
         while (pomocnicza)
 
         {
-          //  pytanie* aktualne_pytanie = pomocnicza->wskaznik_na_pytanie;
-          //  if (aktualne_pytanie)
-           // {
-                printf(" Pytania za %d", pomocnicza->kwota);
-                printf("  %d\n", pomocnicza->ilosc_pytan);
-              /*  while (aktualne_pytanie)
+            pytanie* aktualne_pytanie = pomocnicza->wskaznik_na_pytanie;
+           if (aktualne_pytanie)
+            {
+                printf(" Pytania za %d\n", pomocnicza->kwota);
+                
+               while (aktualne_pytanie)
                 {
-                    wyswietlenie_pytania(aktualne_pytanie);
+                    wyswietlenie_pytania(aktualne_pytanie ,1);
                     aktualne_pytanie = aktualne_pytanie->nastepne;
                 }
                 free(aktualne_pytanie);
-               */ pomocnicza = pomocnicza->next;
+               pomocnicza = pomocnicza->next;
             }
-       // }
+        }
         usuwanie_listy_pytan(head);
         usuwanie_listy_pierwotnej(head);
         return;

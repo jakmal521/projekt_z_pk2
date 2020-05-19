@@ -35,8 +35,6 @@ int main()
         }
 
     }
-     wyswietlenie_wszystkich_pytan(head);
-    return 0;
 
     while (1)
     {

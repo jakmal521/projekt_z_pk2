@@ -34,15 +34,13 @@ typedef struct baza_pytan
 void gra(kwota_gry* glowa);
 void wczytanie_pytan(kwota_gry* head);
 void opcje_dodatkowe(kwota_gry* head);
-void dodanie_pytania();
 void wyswietlenie_wszystkich_pytan(kwota_gry* head);
-void wyswietlenie_pytania(pytanie* head);
+void wyswietlenie_pytania(pytanie* head, int czy_wszystkie_pytania);
 void pol_na_pol(pytanie* head, int flaga_aktualne_kolo, int* uzycie_pol_na_pol_w_pytaniu);
 void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, int flaga_aktualne_kolo, pytanie* head);
 void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo);
 pytanie* losowanie_pytania(kwota_gry* head);
 kwota_gry* utworzenie_listy(kwota_gry* head, int wartosc_pytania);
-void tworzenie_pytania(kwota_gry* head, FILE* plik);
 kwota_gry* szukanie_kwoty(kwota_gry* head, int szukane);
 void usuwanie_listy_pierwotnej(kwota_gry* head);
 void usuwanie_listy_pytan(kwota_gry * head);
