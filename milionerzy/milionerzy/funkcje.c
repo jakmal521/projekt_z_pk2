@@ -74,8 +74,13 @@ void gra(kwota_gry* head)
 
         if (odp == aktualne_pytanie->poprawna)
         {
-            printf("Dobra odpowiedz! Przechodzimy do kolejnego pytania. Twoja aktualna wygrana to %d zl!\n", head->kwota);
-            nagroda = head->kwota;
+            if (i == 12)
+                printf("Dobra odpowiedz!\n");
+            else
+            {
+                printf("Dobra odpowiedz! Przechodzimy do kolejnego pytania. Twoja aktualna wygrana to %d zl!\n", head->kwota);
+                nagroda = head->kwota;
+            }
         }
         else
         {
