@@ -51,7 +51,7 @@ int main()
 
         case '3': usuwanie_listy_pierwotnej(head); head = NULL; _CrtDumpMemoryLeaks(); return 0;
 
-        default: printf("Wybierz 1,2 lub 3 \n"); Sleep(1000);
+        default: break;
 
 
         }

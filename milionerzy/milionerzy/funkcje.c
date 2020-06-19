@@ -14,7 +14,7 @@ void gra(kwota_gry* head)
     int uzycie_telefonu_do_przyjaciela = 0;
     int uzycie_publicznosci = 0;
     kwota_gry* zapamietanie_stanu = head;
-    printf("Za chwile przejdziemy do pierwszego pytania, ktore rozpocznie twoja droge do miliona.\n Przed nim wazne zebys zapoznal/a sie ze sterowaniem:\n gdy nacisniesz klawisz 'r' i potwierdzisz enterem zrezygnujesz z gry.\n Jezeli wybierzesz klawisz 'k' pojawi sie mozliwosc uzycia kol ratunkowych. Pamietaj kazde kolo mozna uzyc tylko raz!\n Powodzenia!!\n");
+    printf("Za chwile przejdziemy do pierwszego pytania, ktore rozpocznie twoja droge do miliona.\n Przed nim wazne zebys zapoznal/a sie ze sterowaniem:\n gdy nacisniesz klawisz 'r' i potwierdzisz enterem zrezygnujesz z gry.\n Jezeli wybierzesz klawisz 'k' pojawi sie mozliwosc uzycia kol ratunkowych. Pamietaj kazde kolo mozna uzyc tylko raz!\n Powodzenia!!\n Nacisnij przycisk enter aby kontynuowac\n");
     getchar(); getchar();
     int nagroda = 0;
     for (int i = 1; i < 13; i++)
@@ -28,7 +28,7 @@ void gra(kwota_gry* head)
             printf("Grasz o gwarantowane %d", head->kwota);
         else printf("Grasz o %d", head->kwota);
         printf("zl. Oto pytanie:\n");
-        getchar();
+        Sleep(750);
         wyswietlenie_pytania(aktualne_pytanie, 0);
         printf("Poprawna odpowiedz to: ");
         odp = getchar();
@@ -39,17 +39,30 @@ void gra(kwota_gry* head)
             while (koniec_petli)
             {
                 int kolo;
-                printf(" 1.50/50\n 2.Telefon do przyjaciela\n 3.Pytanie do publicznosci \n 4.Odpowiadam na pytanie lub rezygnuje ('r')\n");
+                if (uzycie_pol_na_pol)
+                    printf("1.50/50 - kolo ratunkowe wykorzystane!\n ");
+                else    printf("1.50/50\n");
+
+                if (uzycie_telefonu_do_przyjaciela)
+                    printf("2.Telefon do przyjaciela - kolo ratunkowe wykorzystane!\n");
+
+                else printf("2.Telefon do przyjaciela\n");
+
+                if (uzycie_publicznosci)
+                    printf("3.Pytanie do publicznosci - kolo ratunkowe wykorzystane! \n");
+                else printf("3.Pytanie do publicznosci\n");
+
+                 printf ("4.Odpowiadam na pytanie lub rezygnuje ('r')\n");
                 printf("Wybor: \n");
                 scanf("%d", &kolo);
 
                 switch (kolo)
                 {
-                case 1: pol_na_pol(aktualne_pytanie, uzycie_pol_na_pol, &uzycie_pol_na_pol_w_pytaniu); uzycie_pol_na_pol++; break;
-                case 2: telefon_do_przyjaciela(aktualne_pytanie, uzycie_telefonu_do_przyjaciela); uzycie_telefonu_do_przyjaciela++; break;
-                case 3: pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, uzycie_publicznosci, aktualne_pytanie); uzycie_publicznosci++; break;
+                case 1:  pol_na_pol(aktualne_pytanie, uzycie_pol_na_pol, &uzycie_pol_na_pol_w_pytaniu); uzycie_pol_na_pol++; break;
+                case 2:  telefon_do_przyjaciela(aktualne_pytanie, uzycie_telefonu_do_przyjaciela); uzycie_telefonu_do_przyjaciela++; break;
+                case 3:  pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, uzycie_publicznosci, aktualne_pytanie); uzycie_publicznosci++; break;
                 case 4: koniec_petli--; break;
-                default: printf("Wybierz poprawna opcje\n");  break;
+                default:  break;
                 }
                 getchar();
             }
@@ -90,9 +103,10 @@ void gra(kwota_gry* head)
 
             else if (i < 8)
 
-                printf("Niestety twoja odpowiedz jest bledna!Poprawna odpowiedz to %c\nTwoja wygrane to gwarantowane 1000zl. Gratulacje!!\n", aktualne_pytanie->poprawna);
+                printf("Niestety twoja odpowiedz jest bledna! Poprawna odpowiedz to %c\nTwoja wygrane to gwarantowane 1000zl. Gratulacje!!\n", aktualne_pytanie->poprawna);
 
             else printf("Niestety twoja odpowiedz jest bledna! Poprawna odpowiedz to %c\n Twoja wygrane to gwarantowane 40000zl. Gratulacje!!\n", aktualne_pytanie->poprawna);
+            printf("Nacisnij przycisk enter aby zakonczyc gre.\n");
             getchar(); getchar();
             head = zapamietanie_stanu;
             usuwanie_listy_pytan(head);
@@ -409,7 +423,7 @@ kwota_gry* utworzenie_listy(kwota_gry* head, int wartosc_pytania)
 void wyswietlenie_wszystkich_pytan(kwota_gry* head)
 {
     wczytanie_pytan(head);
-    if (head != NULL)
+    if (head)
     {
         kwota_gry* pomocnicza = head;
         while (pomocnicza)
@@ -430,7 +444,7 @@ void wyswietlenie_wszystkich_pytan(kwota_gry* head)
             }
         }
         usuwanie_listy_pytan(head);
-        usuwanie_listy_pierwotnej(head);
+        
         return;
         
     }
