@@ -39,18 +39,17 @@ void gra(kwota_gry* head)
             while (koniec_petli)
             {
                 int kolo;
-                if (uzycie_pol_na_pol)
-                    printf("1.50/50 - kolo ratunkowe wykorzystane!\n ");
-                else    printf("1.50/50\n");
+                if (!uzycie_pol_na_pol)
+                    printf("1.50/50 \n ");
+                
+                if (!uzycie_telefonu_do_przyjaciela)
+                    printf("2.Telefon do przyjaciela\n");
 
-                if (uzycie_telefonu_do_przyjaciela)
-                    printf("2.Telefon do przyjaciela - kolo ratunkowe wykorzystane!\n");
-
-                else printf("2.Telefon do przyjaciela\n");
-
-                if (uzycie_publicznosci)
-                    printf("3.Pytanie do publicznosci - kolo ratunkowe wykorzystane! \n");
-                else printf("3.Pytanie do publicznosci\n");
+               
+                if (!uzycie_publicznosci)
+                    printf("3.Pytanie do publicznosci \n");
+                if ((uzycie_publicznosci) & (uzycie_pol_na_pol) & (uzycie_telefonu_do_przyjaciela))
+                    printf("Wszystkie kola ratunkowe zosta³y wykorzystane!\n");
 
                  printf ("4.Odpowiadam na pytanie lub rezygnuje ('r')\n");
                 printf("Wybor: \n");
@@ -58,9 +57,15 @@ void gra(kwota_gry* head)
 
                 switch (kolo)
                 {
-                case 1:  pol_na_pol(aktualne_pytanie, uzycie_pol_na_pol, &uzycie_pol_na_pol_w_pytaniu); uzycie_pol_na_pol++; break;
-                case 2:  telefon_do_przyjaciela(aktualne_pytanie, uzycie_telefonu_do_przyjaciela); uzycie_telefonu_do_przyjaciela++; break;
-                case 3:  pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, uzycie_publicznosci, aktualne_pytanie); uzycie_publicznosci++; break;
+                case 1: if (!uzycie_pol_na_pol) { pol_na_pol(aktualne_pytanie, &uzycie_pol_na_pol_w_pytaniu); }
+                      else  {wyswietlenie_pytania(aktualne_pytanie, 0);}
+                      uzycie_pol_na_pol++; break;
+                case 2:  if (!uzycie_telefonu_do_przyjaciela) { telefon_do_przyjaciela(aktualne_pytanie); }
+                      else { wyswietlenie_pytania(aktualne_pytanie, 0); } 
+                      uzycie_telefonu_do_przyjaciela++; break;
+                case 3:   if (!uzycie_publicznosci) { pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, aktualne_pytanie); }
+                      else { wyswietlenie_pytania(aktualne_pytanie, 0); }
+                      uzycie_publicznosci++; break;
                 case 4: koniec_petli--; break;
                 default:  break;
                 }
@@ -173,8 +178,7 @@ kwota_gry* szukanie_kwoty(kwota_gry* head, int szukane)
 void wczytanie_pytan(kwota_gry* head)
 {
     FILE* plik = fopen("pytania_do_milionerow.txt", "r");
-    if (plik)
-    {
+   
         char kwota_pytania[9];
         long int kwota_pytania_2;
 
@@ -202,7 +206,7 @@ void wczytanie_pytan(kwota_gry* head)
         }
 
         fclose(plik);
-    }
+    
 }
 
 void wyswietlenie_pytania(pytanie* head ,int czy_wszystkie_pytania)
@@ -219,10 +223,9 @@ void wyswietlenie_pytania(pytanie* head ,int czy_wszystkie_pytania)
 
 
 }
-void pol_na_pol(pytanie* head, int flaga_aktualne_kolo, int* uzycie_pol_na_pol_w_pytaniu)
+void pol_na_pol(pytanie* head, int* uzycie_pol_na_pol_w_pytaniu)
 {
-    if (flaga_aktualne_kolo == 0)
-    {
+    
         int i = 2;
         while (i)
         {
@@ -254,17 +257,14 @@ void pol_na_pol(pytanie* head, int flaga_aktualne_kolo, int* uzycie_pol_na_pol_w
         }
         *uzycie_pol_na_pol_w_pytaniu = 1;
         wyswietlenie_pytania(head,0); return;
-    }
-    else  wyswietlenie_pytania(head,0);  printf("Kolo ratunkowe 50/50 zostalo juz wykorzystane! Jezeli nie wiesz sprobuj odgadnac prawidlowa odpowiedz\n");
-
-    return;
+    
+   
 
 }
-void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo)
+void telefon_do_przyjaciela(pytanie* head)
 {
     wyswietlenie_pytania(head,0);
-    if (flaga_aktualne_kolo == 0)
-    {
+    
 
         srand((unsigned int)time(NULL));
         char odp = '-';
@@ -294,17 +294,14 @@ void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo)
         }
         printf("Hmmm....wydadaje mi sie ze poprawna odpowiedz to %c", odp);
         printf("  ale glowy za to nie dam.\n");
-    }
-    else printf("Kolo ratunkowe telefon do przyjaciela zostalo juz wykorzystane!\n");
-
+    
     return;
 
 }
-void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, int flaga_aktualne_kolo, pytanie* head)
+void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, pytanie* head)
 {
     wyswietlenie_pytania(head,0);
-    if (flaga_aktualne_kolo == 0)
-    {
+   
         srand((unsigned int)time(NULL));
         if (uzycie_pol_na_pol_w_pytaniu == 1)
         {
@@ -368,9 +365,7 @@ void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, int flaga_aktualne
             printf("C: %d%%\n", odp_c);
             printf("D: %d%%\n", odp_d);
         }
-    }
-    else
-        printf("Kolo ratunkowe pytanie do publicznosci zostalo wykorzystane\n");
+   
     return;
 
 

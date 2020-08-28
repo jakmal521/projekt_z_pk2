@@ -59,23 +59,21 @@ void wyswietlenie_pytania(pytanie* head, int czy_wszystkie_pytania);
 
 /** Funkcja usuwajaca dwie bledne odpowiedzi
 @param head wskaznik na aktualne pytanie
-@param flaga_aktualne_kolo zmienna odpowiadajaca za to czy funkcja zostala juz uzyta
 @param uzycie_pol_na_pol_w_pytaniu zmienna odpowiadajaca czy funkcja zostala uzyta w tym pytaniu
 */
-void pol_na_pol(pytanie* head, int flaga_aktualne_kolo, int* uzycie_pol_na_pol_w_pytaniu);
+void pol_na_pol(pytanie* head, int* uzycie_pol_na_pol_w_pytaniu);
 
 /** Funkcja symulujaca wskazania publicznosci
 @param  uzycie_pol_na_pol_w_pytaniu zmienna, ktora mowi czy funcja pol_na_pol zostala uzyta przy aktualnym pytaniu
-@param flaga_aktualne_kolo zmienna odpowiadajaca za to czy funkcja zostala juz uzyta
+
 @param head wskaznik na aktualne pytanie
 */
-void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, int flaga_aktualne_kolo, pytanie* head);
+void pytanie_do_publicznosci(int uzycie_pol_na_pol_w_pytaniu, pytanie* head);
 
 /** Funkcja symulujaca i wyswietlajaca prawdopodobna odpowiedz
-@param flaga_aktualne_kolo zmienna odpowiadajaca za to czy funkcja zostala juz uzyta
 @param head wskaznik na aktualne pytanie
 */
-void telefon_do_przyjaciela(pytanie* head, int flaga_aktualne_kolo);
+void telefon_do_przyjaciela(pytanie* head);
 /** Funkcja losujaca pytanie do wyswietlenia
 @param wskaznik na element zawierajacy liste z pytaniami
 @return funckja zwraca wskaznik na pytanie

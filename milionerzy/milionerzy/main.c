@@ -11,57 +11,65 @@
 int main()
 
 {
-    kwota_gry* head = NULL; char wybor;
-
-
-
-    for (int i = 1; i < 13; i++)
+    FILE* plik = fopen("pytania_do_milionerow.txt", "r");
+    if (plik)
     {
-        switch (i)
+        kwota_gry* head = NULL; char wybor;
+
+
+
+        for (int i = 1; i < 13; i++)
         {
-        case 1: head = utworzenie_listy(head, 500); break;
-        case 2: head = utworzenie_listy(head, 1000); break;
-        case 3: head = utworzenie_listy(head, 2000); break;
-        case 4: head = utworzenie_listy(head, 5000); break;
-        case 5: head = utworzenie_listy(head, 10000); break;
-        case 6: head = utworzenie_listy(head, 20000); break;
-        case 7: head = utworzenie_listy(head, 40000); break;
-        case 8: head = utworzenie_listy(head, 75000); break;
-        case 9: head = utworzenie_listy(head, 125000); break;
-        case 10: head = utworzenie_listy(head, 250000); break;
-        case 11: head = utworzenie_listy(head, 500000); break;
-        case 12: head = utworzenie_listy(head, 1000000); break;
+            switch (i)
+            {
+            case 1: head = utworzenie_listy(head, 500); break;
+            case 2: head = utworzenie_listy(head, 1000); break;
+            case 3: head = utworzenie_listy(head, 2000); break;
+            case 4: head = utworzenie_listy(head, 5000); break;
+            case 5: head = utworzenie_listy(head, 10000); break;
+            case 6: head = utworzenie_listy(head, 20000); break;
+            case 7: head = utworzenie_listy(head, 40000); break;
+            case 8: head = utworzenie_listy(head, 75000); break;
+            case 9: head = utworzenie_listy(head, 125000); break;
+            case 10: head = utworzenie_listy(head, 250000); break;
+            case 11: head = utworzenie_listy(head, 500000); break;
+            case 12: head = utworzenie_listy(head, 1000000); break;
+
+            }
 
         }
 
-    }
-
-    while (1)
-    {
-
-        printf("Witamy przyszlego milionera!\n");
-        printf("Ktora opcje chcesz wybrac?\n 1. Nowa gra \n 2. Opcje\n 3. Wyjscie\n");
-        wybor = getchar();
-
-        switch (wybor)
+        while (1)
         {
-        case '1': gra(head); break;
 
-        case '2': opcje_dodatkowe(head); break;
+            printf("Witamy przyszlego milionera!\n");
+            printf("Ktora opcje chcesz wybrac?\n 1. Nowa gra \n 2. Opcje\n 3. Wyjscie\n");
+            wybor = getchar();
 
-        case '3': usuwanie_listy_pierwotnej(head); head = NULL; _CrtDumpMemoryLeaks(); return 0;
+            switch (wybor)
+            {
+            case '1': gra(head); break;
 
-        default: break;
+            case '2': opcje_dodatkowe(head); break;
+
+            case '3': usuwanie_listy_pierwotnej(head); head = NULL; return 0;
+
+            default: break;
 
 
+            }
+            system("cls");
         }
-        system("cls");
+
+
+
+
     }
-
-
-
-
-
+    else
+    {
+        printf("Brak pliku z pytaniami. Dolacz plik i uruchom program jeszcze raz");
+        return 0;
+    }
 }
 
 
