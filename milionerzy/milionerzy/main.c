@@ -14,6 +14,7 @@ int main()
     FILE* plik = fopen("pytania_do_milionerow.txt", "r");
     if (plik)
     {
+        fclose(plik);
         kwota_gry* head = NULL; char wybor;
 
 
