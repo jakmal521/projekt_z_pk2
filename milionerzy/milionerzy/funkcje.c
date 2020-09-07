@@ -38,7 +38,7 @@ void gra(kwota_gry* head)
             int koniec_petli = 1;
             while (koniec_petli)
             {
-                int kolo;
+                char kolo;
                 if (!uzycie_pol_na_pol)
                     printf("1.50/50 \n ");
                 
@@ -49,25 +49,25 @@ void gra(kwota_gry* head)
                 if (!uzycie_publicznosci)
                     printf("3.Pytanie do publicznosci \n");
                 if ((uzycie_publicznosci) & (uzycie_pol_na_pol) & (uzycie_telefonu_do_przyjaciela))
-                    printf("Wszystkie kola ratunkowe zosta≥y wykorzystane!\n");
+                    printf("Wszystkie kola ratunkowe zosta≈Çy wykorzystane!\n");
 
                  printf ("4.Odpowiadam na pytanie lub rezygnuje ('r')\n");
                 printf("Wybor: \n");
-                scanf("%d", &kolo);
+                kolo = getchar();
 
                 switch (kolo)
                 {
-                case 1: if (!uzycie_pol_na_pol) { pol_na_pol(aktualne_pytanie, &uzycie_pol_na_pol_w_pytaniu); }
+                case '1': if (!uzycie_pol_na_pol) { pol_na_pol(aktualne_pytanie, &uzycie_pol_na_pol_w_pytaniu); }
                       else  {wyswietlenie_pytania(aktualne_pytanie, 0);}
                       uzycie_pol_na_pol++; break;
-                case 2:  if (!uzycie_telefonu_do_przyjaciela) { telefon_do_przyjaciela(aktualne_pytanie); }
+                case '2':  if (!uzycie_telefonu_do_przyjaciela) { telefon_do_przyjaciela(aktualne_pytanie); }
                       else { wyswietlenie_pytania(aktualne_pytanie, 0); } 
                       uzycie_telefonu_do_przyjaciela++; break;
-                case 3:   if (!uzycie_publicznosci) { pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, aktualne_pytanie); }
+                case '3':   if (!uzycie_publicznosci) { pytanie_do_publicznosci(uzycie_pol_na_pol_w_pytaniu, aktualne_pytanie); }
                       else { wyswietlenie_pytania(aktualne_pytanie, 0); }
                       uzycie_publicznosci++; break;
-                case 4: koniec_petli--; break;
-                default:  break;
+                case '4': koniec_petli--; break;
+                default: printf("wybierz jedna z opcji\n");  break;
                 }
                 getchar();
             }
