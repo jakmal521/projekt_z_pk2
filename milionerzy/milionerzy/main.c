@@ -19,18 +19,18 @@ int main()
 
 
 
-             head = utworzenie_listy(head, 500); break;
-             head = utworzenie_listy(head, 1000); break;
-             head = utworzenie_listy(head, 2000); break;
-             head = utworzenie_listy(head, 5000); break;
-             head = utworzenie_listy(head, 10000); break;
-             head = utworzenie_listy(head, 20000); break;
-             head = utworzenie_listy(head, 40000); break;
-             head = utworzenie_listy(head, 75000); break;
-             head = utworzenie_listy(head, 125000); break;
-             head = utworzenie_listy(head, 250000); break;
-             head = utworzenie_listy(head, 500000); break;
-             head = utworzenie_listy(head, 1000000); break;
+             head = utworzenie_listy(head, 500); 
+             head = utworzenie_listy(head, 1000); 
+             head = utworzenie_listy(head, 2000); 
+             head = utworzenie_listy(head, 5000); 
+             head = utworzenie_listy(head, 10000); 
+             head = utworzenie_listy(head, 20000); 
+             head = utworzenie_listy(head, 40000); 
+             head = utworzenie_listy(head, 75000); 
+             head = utworzenie_listy(head, 125000); 
+             head = utworzenie_listy(head, 250000); 
+             head = utworzenie_listy(head, 500000);
+             head = utworzenie_listy(head, 1000000);
 
             
 
