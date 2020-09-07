@@ -37,7 +37,7 @@ void gra(kwota_gry* head)
         {
             int koniec_petli = 1;
             while (koniec_petli)
-            {
+            {   wyswietlenie_pytania(aktualne_pytanie, 0);
                 char kolo;
                 if (!uzycie_pol_na_pol)
                     printf("1.50/50 \n ");
